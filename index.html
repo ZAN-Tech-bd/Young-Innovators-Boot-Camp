@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZAN Tech Young Innovators Boot Camp</title>
+    <title>ZAN Tech Young Innovators Robotics & IoT Boot Camp</title>
+    <meta name="description" content="A 5-day, hands-on Robotics, IoT & AI boot camp for school students. Zero to hero: plan, select equipment, design circuits, and build 4 real projects — culminating in a live competition with prizes and certificates.">
+    <link rel="icon" type="image/png" href="zan tech logo.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    
+
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -45,6 +47,9 @@
             50% { transform: translateY(-15px) rotate(180deg); }
             100% { transform: translateY(0px) rotate(360deg); }
         }
+        .float-slow {
+            animation: float 7s ease-in-out infinite;
+        }
         /* Clean Glassmorphism Panels */
         .glass-panel {
             background: rgba(255, 255, 255, 0.02);
@@ -58,6 +63,45 @@
             background: rgba(255, 255, 255, 0.05);
             border-color: rgba(211, 47, 47, 0.3);
         }
+        /* Sticky Navbar */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(11, 19, 43, 0.75);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .nav-link {
+            position: relative;
+            transition: color 0.25s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0; bottom: -6px;
+            width: 0%;
+            height: 2px;
+            background: linear-gradient(90deg, #22d3ee, #d32f2f);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+        .nav-link:hover { color: #fff; }
+
+        /* Step cards */
+        .step-num {
+            font-family: 'Space Grotesk', sans-serif;
+            -webkit-text-stroke: 1.5px rgba(255,255,255,0.18);
+            color: transparent;
+        }
+
+        /* FAQ */
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        details summary i { transition: transform 0.3s ease; }
+        details[open] summary i { transform: rotate(180deg); }
+        details[open] summary { color: #22d3ee; }
+
         /* Iframe Frame Fixes */
         .form-container iframe {
             width: 100%;
@@ -75,32 +119,65 @@
 </head>
 <body>
 
-    <div class="absolute w-full h-full min-h-screen overflow-hidden pointer-events-none z-0">
+    <div class="fixed w-full h-full min-h-screen overflow-hidden pointer-events-none z-0">
         <div class="circuit-bg"></div>
         <div class="floating-orb absolute top-24 left-6 w-40 h-40 bg-red-600 rounded-full blur-[140px] opacity-30"></div>
         <div class="floating-orb absolute bottom-1/3 right-6 w-56 h-56 bg-blue-700 rounded-full blur-[160px] opacity-25" style="animation-delay: 3s;"></div>
     </div>
 
-    <header class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-5 flex flex-wrap justify-between items-center gap-3">
-        <div class="flex items-center space-x-2 sm:space-x-3">
-            <img src="zan tech logo.png" alt="ZAN Tech Logo" class="w-8 h-8 sm:w-10 sm:h-10 object-contain">
-            <span class="heading-font font-bold text-lg sm:text-2xl tracking-wider">ZAN <span class="text-red-500">Tech</span></span>
-        </div>
-        <a href="#admission-desk" class="bg-zan-red hover:bg-red-700 text-white font-semibold px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl transition transform hover:scale-105 shadow-md text-sm sm:text-base">Register Online</a>
-    </header>
+    <!-- Sticky Navbar -->
+    <nav class="navbar">
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center gap-3">
+            <a href="#top" class="flex items-center space-x-2 sm:space-x-3">
+                <img src="zan tech logo.png" alt="ZAN Tech Logo" class="w-8 h-8 sm:w-10 sm:h-10 object-contain">
+                <span class="heading-font font-bold text-lg sm:text-2xl tracking-wider">ZAN <span class="text-red-500">Tech</span></span>
+            </a>
 
-    <section class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-16 sm:pb-24 grid lg:grid-cols-12 gap-10 lg:gap-12 items-center lg:min-h-[85vh]">
+            <div class="hidden lg:flex items-center gap-8 text-sm font-semibold text-gray-300">
+                <a href="#top" class="nav-link">Home</a>
+                <a href="#methodology" class="nav-link">Methodology</a>
+                <a href="#curriculum-roadmap" class="nav-link">Curriculum</a>
+                <a href="#awards" class="nav-link">Awards</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+            </div>
+
+            <div class="flex items-center gap-2 sm:gap-3">
+                <a href="#admission-desk" class="bg-zan-red hover:bg-red-700 text-white font-semibold px-3.5 sm:px-6 py-2 sm:py-2.5 rounded-xl transition transform hover:scale-105 shadow-md text-xs sm:text-base whitespace-nowrap">Register<span class="hidden sm:inline"> Online</span></a>
+                <label for="nav-toggle" class="lg:hidden cursor-pointer text-xl sm:text-2xl text-gray-200 px-1">
+                    <i class="fa-solid fa-bars"></i>
+                </label>
+            </div>
+        </div>
+
+        <input type="checkbox" id="nav-toggle" class="hidden peer">
+        <div class="lg:hidden hidden peer-checked:flex flex-col gap-1 px-6 pb-4 text-sm font-semibold text-gray-200 border-t border-white/5">
+            <a href="#top" class="py-2.5 border-b border-white/5">Home</a>
+            <a href="#methodology" class="py-2.5 border-b border-white/5">Methodology</a>
+            <a href="#curriculum-roadmap" class="py-2.5 border-b border-white/5">Curriculum</a>
+            <a href="#awards" class="py-2.5 border-b border-white/5">Awards & Certificates</a>
+            <a href="#faq" class="py-2.5">FAQ</a>
+        </div>
+    </nav>
+
+    <section id="top" class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-16 sm:pb-24 grid lg:grid-cols-12 gap-10 lg:gap-12 items-center lg:min-h-[80vh]">
         <div class="lg:col-span-7" data-aos="fade-right" data-aos-duration="1000">
-            <span class="bg-yellow-400/20 text-yellow-300 border border-yellow-400/50 px-5 py-2 rounded-full font-bold text-sm tracking-wide shadow-[0_0_15px_rgba(250,204,21,0.3)] inline-block">🌟 5-Day Mega Robotics & IoT Summer Program</span>
+            <span class="bg-yellow-400/20 text-yellow-300 border border-yellow-400/50 px-5 py-2 rounded-full font-bold text-sm tracking-wide shadow-[0_0_15px_rgba(250,204,21,0.3)] inline-block">🌟 5-Day Mega Robotics, IoT & AI Summer Program</span>
             <h1 class="heading-font font-extrabold text-3xl sm:text-5xl lg:text-7xl mt-6 leading-tight">
                 Young Innovators <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 animate-pulse">Boot Camp</span>
             </h1>
             <p class="mt-6 text-gray-200 text-base sm:text-xl leading-relaxed max-w-2xl font-medium">
-                Welcome to the future of STEM education. ZAN Tech presents an exclusive, high-impact 5-Day Robotics & IoT Boot Camp specially tailored for English Medium students during their post-final exam break. This program is engineered to transform curious minds into hands-on creators, innovators, and future tech leaders.
+                Welcome to the future of STEM education. ZAN Tech presents an exclusive, high-impact 5-Day Robotics, IoT & AI Boot Camp specially tailored for English Medium students during their post-final exam break. Starting from absolute zero, students learn how real engineers work — plan a project, select the right equipment, design the circuit, and build it — turning curious minds into hands-on creators, innovators, and future tech leaders.
             </p>
             <div class="mt-8 flex flex-wrap gap-4">
                 <a href="#curriculum-roadmap" class="bg-white text-slate-950 font-bold px-8 py-3.5 rounded-xl transition hover:bg-gray-200 shadow-md text-sm">Explore Curriculum</a>
                 <a href="#admission-desk" class="bg-zan-red hover:bg-red-700 text-white font-bold px-8 py-3.5 rounded-xl transition shadow-lg text-sm">Secure Your Slot</a>
+            </div>
+
+            <div class="mt-8 flex flex-wrap gap-2.5">
+                <span class="bg-white/5 border border-white/10 text-gray-200 text-xs font-semibold px-3.5 py-2 rounded-full flex items-center gap-2"><i class="fa-solid fa-seedling text-green-400"></i> Zero Experience Needed</span>
+                <span class="bg-white/5 border border-white/10 text-gray-200 text-xs font-semibold px-3.5 py-2 rounded-full flex items-center gap-2"><i class="fa-solid fa-flask text-cyan-400"></i> 80% Hands-on Practical</span>
+                <span class="bg-white/5 border border-white/10 text-gray-200 text-xs font-semibold px-3.5 py-2 rounded-full flex items-center gap-2"><i class="fa-solid fa-brain text-purple-400"></i> Robotics + IoT + AI</span>
+                <span class="bg-white/5 border border-white/10 text-gray-200 text-xs font-semibold px-3.5 py-2 rounded-full flex items-center gap-2"><i class="fa-solid fa-certificate text-yellow-400"></i> Certificates & Prizes</span>
             </div>
         </div>
 
@@ -117,6 +194,7 @@
                     </iframe>
                 </div>
             </div>
+            <img src="zantech mascode.png" onerror="this.style.display='none'" alt="ZAN Tech Robot Mascot" class="float-slow hidden sm:block absolute -bottom-8 -left-6 w-28 sm:w-36 drop-shadow-2xl z-20 select-none pointer-events-none">
         </div>
     </section>
 
@@ -127,55 +205,94 @@
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 text-center">
             <div class="bg-white/5 p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-white/10 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(34,211,238,0.2)] transition-all duration-300 cursor-pointer" data-aos="zoom-in" data-aos-delay="50">
-                <div class="text-3xl sm:text-4xl mb-2 sm:mb-3">🗓️</div>
+                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-cyan-400/10 border border-cyan-400/20 flex items-center justify-center text-cyan-400 text-base sm:text-lg mx-auto mb-2 sm:mb-3"><i class="fa-solid fa-calendar-days"></i></div>
                 <p class="text-gray-300 text-xs font-bold uppercase tracking-wider">Start Date</p>
                 <p class="heading-font text-lg sm:text-xl font-bold mt-2 text-cyan-400">June 20</p>
             </div>
             <div class="bg-white/5 p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-white/10 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(255,255,255,0.2)] transition-all duration-300 cursor-pointer" data-aos="zoom-in" data-aos-delay="100">
-                <div class="text-3xl sm:text-4xl mb-2 sm:mb-3">⏳</div>
+                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-white text-base sm:text-lg mx-auto mb-2 sm:mb-3"><i class="fa-solid fa-hourglass-half"></i></div>
                 <p class="text-gray-300 text-xs font-bold uppercase tracking-wider">Duration</p>
                 <p class="heading-font text-base sm:text-lg font-bold mt-2 text-white">5 Days</p>
             </div>
             <div class="bg-white/5 p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-white/10 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(244,114,182,0.2)] transition-all duration-300 cursor-pointer col-span-2 lg:col-span-2" data-aos="zoom-in" data-aos-delay="150">
-                <div class="text-3xl sm:text-4xl mb-2 sm:mb-3">👥</div>
+                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-pink-400/10 border border-pink-400/20 flex items-center justify-center text-pink-400 text-base sm:text-lg mx-auto mb-2 sm:mb-3"><i class="fa-solid fa-user-group"></i></div>
                 <p class="text-gray-300 text-xs font-bold uppercase tracking-wider">Batch Capacity</p>
                 <p class="heading-font text-base sm:text-lg font-bold mt-2 text-pink-400">Strictly limited to 10 students per slot</p>
             </div>
             <div class="bg-white/5 p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-white/10 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(250,204,21,0.2)] transition-all duration-300 cursor-pointer" data-aos="zoom-in" data-aos-delay="200">
-                <div class="text-3xl sm:text-4xl mb-2 sm:mb-3">🌅</div>
+                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center text-yellow-400 text-base sm:text-lg mx-auto mb-2 sm:mb-3"><i class="fa-solid fa-sun"></i></div>
                 <p class="text-gray-300 text-xs font-bold uppercase tracking-wider">Slot A (Morning)</p>
                 <p class="heading-font text-sm sm:text-lg font-bold mt-2 text-yellow-400">11:00 AM – 02:00 PM</p>
             </div>
             <div class="bg-white/5 p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-white/10 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(251,146,60,0.2)] transition-all duration-300 cursor-pointer" data-aos="zoom-in" data-aos-delay="250">
-                <div class="text-3xl sm:text-4xl mb-2 sm:mb-3">🌇</div>
+                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-orange-400/10 border border-orange-400/20 flex items-center justify-center text-orange-400 text-base sm:text-lg mx-auto mb-2 sm:mb-3"><i class="fa-solid fa-cloud-sun"></i></div>
                 <p class="text-gray-300 text-xs font-bold uppercase tracking-wider">Slot B (Afternoon)</p>
                 <p class="heading-font text-sm sm:text-lg font-bold mt-2 text-orange-400">03:00 PM – 06:00 PM</p>
             </div>
             <div class="bg-white/5 p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-white/10 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(147,197,253,0.2)] transition-all duration-300 cursor-pointer" data-aos="zoom-in" data-aos-delay="300">
-                <div class="text-3xl sm:text-4xl mb-2 sm:mb-3">🔬</div>
+                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-blue-400/10 border border-blue-400/20 flex items-center justify-center text-blue-300 text-base sm:text-lg mx-auto mb-2 sm:mb-3"><i class="fa-solid fa-flask"></i></div>
                 <p class="text-gray-300 text-xs font-bold uppercase tracking-wider">Learning Ratio</p>
                 <p class="heading-font text-xs sm:text-sm font-bold mt-2 text-blue-300">80% Practical | 20% Logic</p>
             </div>
             <div class="bg-white/5 p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-white/10 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(74,222,128,0.2)] transition-all duration-300 cursor-pointer" data-aos="zoom-in" data-aos-delay="350">
-                <div class="text-3xl sm:text-4xl mb-2 sm:mb-3">💰</div>
+                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-green-400/10 border border-green-400/20 flex items-center justify-center text-green-400 text-base sm:text-lg mx-auto mb-2 sm:mb-3"><i class="fa-solid fa-sack-dollar"></i></div>
                 <p class="text-gray-300 text-xs font-bold uppercase tracking-wider">Total Investment</p>
                 <p class="heading-font text-lg sm:text-xl font-bold mt-2 text-green-400">2,999 BDT</p>
             </div>
         </div>
     </section>
 
-    <section id="curriculum-roadmap" class="relative z-10 max-w-7xl mx-auto px-6 py-24">
-        <div class="text-center max-w-2xl mx-auto mb-20">
-            <h2 class="heading-font font-bold text-3xl sm:text-4xl tracking-tight">5-Day Curriculum Roadmap Table</h2>
+    <!-- Methodology Section -->
+    <section id="methodology" class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+            <span class="text-cyan-400 font-bold text-xs uppercase tracking-widest bg-cyan-400/10 px-3 py-1 rounded-md">Our Teaching Method</span>
+            <h2 class="heading-font font-bold text-3xl sm:text-4xl tracking-tight mt-4">From Zero to Engineer in 4 Steps</h2>
             <div class="w-12 h-1 bg-zan-red mx-auto mt-4 rounded-full"></div>
-            <p class="text-gray-400 text-sm mt-4 leading-relaxed">This visual roadmap is designed to give parents and instructors a clear, glanceable overview of what the young innovators will build, learn, and showcase each day.</p>
+            <p class="text-gray-400 text-sm mt-4 leading-relaxed">Every project in this boot camp — from a simple night light to an AI-powered irrigation system — is built using the same professional engineering workflow. Students don't just follow instructions; they learn how real robotics teams think.</p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="glass-panel p-6 rounded-3xl relative overflow-hidden" data-aos="fade-up" data-aos-delay="0">
+                <span class="step-num absolute -top-4 -right-1 text-6xl font-extrabold">01</span>
+                <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 text-xl mb-5 border border-cyan-500/10 relative z-10"><i class="fa-solid fa-compass"></i></div>
+                <h4 class="font-bold text-lg mb-2 relative z-10">1. Plan the Project</h4>
+                <p class="text-sm text-gray-400 leading-relaxed relative z-10">Before touching any wires, students define the problem they're solving and what a successful project should do — just like a real engineering team.</p>
+            </div>
+            <div class="glass-panel p-6 rounded-3xl relative overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                <span class="step-num absolute -top-4 -right-1 text-6xl font-extrabold">02</span>
+                <div class="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-400 text-xl mb-5 border border-blue-500/10 relative z-10"><i class="fa-solid fa-toolbox"></i></div>
+                <h4 class="font-bold text-lg mb-2 relative z-10">2. Select Equipment</h4>
+                <p class="text-sm text-gray-400 leading-relaxed relative z-10">Students learn to choose the right microcontroller, sensors, motors, and components for the job — and understand exactly why each part matters.</p>
+            </div>
+            <div class="glass-panel p-6 rounded-3xl relative overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                <span class="step-num absolute -top-4 -right-1 text-6xl font-extrabold">03</span>
+                <div class="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-400 text-xl mb-5 border border-purple-500/10 relative z-10"><i class="fa-solid fa-diagram-project"></i></div>
+                <h4 class="font-bold text-lg mb-2 relative z-10">3. Design the Circuit</h4>
+                <p class="text-sm text-gray-400 leading-relaxed relative z-10">Students sketch and read circuit diagrams, learning how power and signals flow between components before building anything.</p>
+            </div>
+            <div class="glass-panel p-6 rounded-3xl relative overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+                <span class="step-num absolute -top-4 -right-1 text-6xl font-extrabold">04</span>
+                <div class="w-12 h-12 rounded-2xl bg-red-500/10 flex items-center justify-center text-red-400 text-xl mb-5 border border-red-500/10 relative z-10"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                <h4 class="font-bold text-lg mb-2 relative z-10">4. Build, Code & Test</h4>
+                <p class="text-sm text-gray-400 leading-relaxed relative z-10">Finally, students assemble the hardware, write the program, then test, debug, and improve it — completing a real, working project.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="curriculum-roadmap" class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-12">
+        <div class="text-center max-w-2xl mx-auto mb-20">
+            <span class="text-red-500 font-bold text-xs uppercase tracking-widest bg-red-500/10 px-3 py-1 rounded-md">The Journey</span>
+            <h2 class="heading-font font-bold text-3xl sm:text-4xl tracking-tight mt-4">5-Day Curriculum Roadmap</h2>
+            <div class="w-12 h-1 bg-zan-red mx-auto mt-4 rounded-full"></div>
+            <p class="text-gray-400 text-sm mt-4 leading-relaxed">A sequence of 4 real projects — each one building on the last — gives parents and instructors a clear, glanceable overview of what the young innovators will plan, build, and showcase every day.</p>
         </div>
 
         <div class="space-y-12">
+            <!-- DAY 1 -->
             <div class="glass-panel p-6 sm:p-8 rounded-3xl grid lg:grid-cols-12 gap-8 items-center" data-aos="fade-up">
                 <div class="lg:col-span-4 text-center lg:text-left lg:border-r lg:border-white/10 lg:pr-6">
                     <span class="text-red-500 font-bold text-xs uppercase tracking-widest bg-red-500/10 px-3 py-1 rounded-md">Day 01</span>
-                    <h3 class="heading-font font-bold text-2xl mt-3 text-white">The Spark & Electronics Foundation </h3>
+                    <h3 class="heading-font font-bold text-2xl mt-3 text-white">The Spark: Project Planning & Electronics Foundation</h3>
                     <div class="mt-4 rounded-2xl overflow-hidden border border-white/10 shadow-lg">
                         <img src="The Smart Night Light.png" onerror="this.src='https://placehold.co/600x400/0f172a/fff?text=The+Smart+Night+Light'" alt="The Smart Night Light Project Diagram" class="w-full object-cover h-44">
                     </div>
@@ -183,61 +300,65 @@
                 <div class="lg:col-span-5 space-y-4">
                     <div>
                         <span class="text-xs font-bold text-blue-400 tracking-wider uppercase">Project Core</span>
-                        <h4 class="text-lg font-bold text-white mt-0.5">The Smart Night Light </h4>
+                        <h4 class="text-lg font-bold text-white mt-0.5">The Smart Night Light</h4>
                     </div>
                     <ul class="text-sm text-gray-300 space-y-2 pl-4 list-disc">
-                        <li>Introduction to microcontrollers and breadboards.</li>
-                        <li>Learning circuit mapping using resistors and LEDs.</li>
-                        <li>Programming an LDR sensor to monitor real-time light thresholds.</li>
+                        <li>Kick-off: introducing the Plan → Select → Design → Build workflow used for every project this week.</li>
+                        <li>Introduction to microcontrollers, breadboards, and circuit mapping with resistors and LEDs.</li>
+                        <li>Selecting and wiring an LDR (light sensor) to detect real-time brightness levels.</li>
+                        <li>Programming the microcontroller to automatically switch a light on when it gets dark.</li>
                     </ul>
                 </div>
                 <div class="lg:col-span-3 bg-white/5 p-5 rounded-2xl border border-white/5 space-y-3 text-xs">
                     <div>
                         <span class="text-gray-400 block font-medium">Technical Pillar:</span>
-                        <span class="text-white font-semibold">Basic Circuitry & Code Logic </span>
+                        <span class="text-white font-semibold">Engineering Workflow & Basic Circuitry</span>
                     </div>
                     <div class="pt-2 border-t border-white/5">
                         <span class="text-gray-400 block font-medium">Parents' Corner Skill:</span>
-                        <span class="text-red-400 font-semibold">Inventory Management </span>
+                        <span class="text-red-400 font-semibold">Inventory Management</span>
                     </div>
                 </div>
             </div>
 
+            <!-- DAY 2 -->
             <div class="glass-panel p-6 sm:p-8 rounded-3xl grid lg:grid-cols-12 gap-8 items-center" data-aos="fade-up">
                 <div class="lg:col-span-4 text-center lg:text-left lg:border-r lg:border-white/10 lg:pr-6">
                     <span class="text-red-500 font-bold text-xs uppercase tracking-widest bg-red-500/10 px-3 py-1 rounded-md">Day 02</span>
-                    <h3 class="heading-font font-bold text-2xl mt-3 text-white">Robotics & Actuators </h3>
+                    <h3 class="heading-font font-bold text-2xl mt-3 text-white">Robotics & Motor Control: Build Your RC Car</h3>
                     <div class="mt-4 rounded-2xl overflow-hidden border border-white/10 shadow-lg">
-                        <img src="The Autonomous Crawler.png" onerror="this.src='https://placehold.co/600x400/0f172a/fff?text=The+Autonomous+Crawler'" alt="The Autonomous Crawler Project Diagram" class="w-full object-cover h-44">
+                        <img src="The Autonomous Crawler.png" onerror="this.src='https://placehold.co/600x400/0f172a/fff?text=The+RC+Car'" alt="The RC Car Project Diagram" class="w-full object-cover h-44">
                     </div>
                 </div>
                 <div class="lg:col-span-5 space-y-4">
                     <div>
                         <span class="text-xs font-bold text-blue-400 tracking-wider uppercase">Project Core</span>
-                        <h4 class="text-lg font-bold text-white mt-0.5">The Autonomous Crawler </h4>
+                        <h4 class="text-lg font-bold text-white mt-0.5">The RC Car</h4>
                     </div>
                     <ul class="text-sm text-gray-300 space-y-2 pl-4 list-disc">
+                        <li>Planning the build: choosing a chassis, wheels, and the right motor driver for an RC car.</li>
                         <li>Understanding DC motors, power delivery, and voltage regulation.</li>
-                        <li>Wiring and controlling an L298N/L293D motor driver.</li>
-                        <li>Assembling a 2WD/4WD robotic chassis from scratch.</li>
+                        <li>Designing the wiring diagram and connecting an L298N/L293D motor driver.</li>
+                        <li>Assembling and programming a 2WD/4WD remote-controlled robotic car from scratch.</li>
                     </ul>
                 </div>
                 <div class="lg:col-span-3 bg-white/5 p-5 rounded-2xl border border-white/5 space-y-3 text-xs">
                     <div>
                         <span class="text-gray-400 block font-medium">Technical Pillar:</span>
-                        <span class="text-white font-semibold">Mechanical Assembly & Motor Control </span>
+                        <span class="text-white font-semibold">Mechanical Assembly & Motor Control</span>
                     </div>
                     <div class="pt-2 border-t border-white/5">
                         <span class="text-gray-400 block font-medium">Parents' Corner Skill:</span>
-                        <span class="text-red-400 font-semibold">Workspace Etiquette </span>
+                        <span class="text-red-400 font-semibold">Workspace Etiquette</span>
                     </div>
                 </div>
             </div>
 
+            <!-- DAY 3 -->
             <div class="glass-panel p-6 sm:p-8 rounded-3xl grid lg:grid-cols-12 gap-8 items-center" data-aos="fade-up">
                 <div class="lg:col-span-4 text-center lg:text-left lg:border-r lg:border-white/10 lg:pr-6">
                     <span class="text-red-500 font-bold text-xs uppercase tracking-widest bg-red-500/10 px-3 py-1 rounded-md">Day 03</span>
-                    <h3 class="heading-font font-bold text-2xl mt-3 text-white">Intelligent Navigation Systems </h3>
+                    <h3 class="heading-font font-bold text-2xl mt-3 text-white">Intelligent Navigation: The Obstacle-Avoiding Car</h3>
                     <div class="mt-4 rounded-2xl overflow-hidden border border-white/10 shadow-lg">
                         <img src="The Smart Obstacle-Avoiding Car.png" onerror="this.src='https://placehold.co/600x400/0f172a/fff?text=Obstacle+Avoiding+Car'" alt="Obstacle Avoiding Car Project Diagram" class="w-full object-cover h-44">
                     </div>
@@ -245,30 +366,32 @@
                 <div class="lg:col-span-5 space-y-4">
                     <div>
                         <span class="text-xs font-bold text-blue-400 tracking-wider uppercase">Project Core</span>
-                        <h4 class="text-lg font-bold text-white mt-0.5">The Smart Obstacle-Avoiding Car </h4>
+                        <h4 class="text-lg font-bold text-white mt-0.5">The Smart Obstacle-Avoiding Car</h4>
                     </div>
                     <ul class="text-sm text-gray-300 space-y-2 pl-4 list-disc">
-                        <li>Integrating ultrasonic sonar technology to measure physical distance.</li>
-                        <li>Calibrating a servo motor to scan the surroundings dynamically.</li>
-                        <li>Writing nested If-Else structures for real-time decision-making.</li>
+                        <li>Upgrading yesterday's RC car: planning and selecting an ultrasonic sensor and a servo motor.</li>
+                        <li>Redesigning the circuit to integrate ultrasonic sonar for measuring distance to obstacles.</li>
+                        <li>Calibrating the servo motor to scan the surroundings dynamically.</li>
+                        <li>Writing nested If-Else logic so the car detects and avoids obstacles completely on its own.</li>
                     </ul>
                 </div>
                 <div class="lg:col-span-3 bg-white/5 p-5 rounded-2xl border border-white/5 space-y-3 text-xs">
                     <div>
                         <span class="text-gray-400 block font-medium">Technical Pillar:</span>
-                        <span class="text-white font-semibold">Autonomous Navigation & Critical Coding </span>
+                        <span class="text-white font-semibold">Autonomous Navigation & Logic Building</span>
                     </div>
                     <div class="pt-2 border-t border-white/5">
                         <span class="text-gray-400 block font-medium">Parents' Corner Skill:</span>
-                        <span class="text-red-400 font-semibold">Failure Analysis & Debugging </span>
+                        <span class="text-red-400 font-semibold">Failure Analysis & Debugging</span>
                     </div>
                 </div>
             </div>
 
+            <!-- DAY 4 -->
             <div class="glass-panel p-6 sm:p-8 rounded-3xl grid lg:grid-cols-12 gap-8 items-center" data-aos="fade-up">
                 <div class="lg:col-span-4 text-center lg:text-left lg:border-r lg:border-white/10 lg:pr-6">
                     <span class="text-red-500 font-bold text-xs uppercase tracking-widest bg-red-500/10 px-3 py-1 rounded-md">Day 04</span>
-                    <h3 class="heading-font font-bold text-2xl mt-3 text-white">Internet of Things (IoT) & Automation </h3>
+                    <h3 class="heading-font font-bold text-2xl mt-3 text-white">IoT & AI: Smart Irrigation System</h3>
                     <div class="mt-4 rounded-2xl overflow-hidden border border-white/10 shadow-lg">
                         <img src="IoT Smart Irrigation System.png" onerror="this.src='https://placehold.co/600x400/0f172a/fff?text=Smart+Irrigation+System'" alt="Smart Irrigation System Project Diagram" class="w-full object-cover h-44">
                     </div>
@@ -276,53 +399,56 @@
                 <div class="lg:col-span-5 space-y-4">
                     <div>
                         <span class="text-xs font-bold text-blue-400 tracking-wider uppercase">Project Core</span>
-                        <h4 class="text-lg font-bold text-white mt-0.5">IoT Smart Irrigation System </h4>
+                        <h4 class="text-lg font-bold text-white mt-0.5">IoT Smart Irrigation System + AI Prediction</h4>
                     </div>
                     <ul class="text-sm text-gray-300 space-y-2 pl-4 list-disc">
-                        <li>Connecting microcontrollers to global high-speed Wi-Fi networks.</li>
-                        <li>Interfacing analog soil moisture sensors with electromagnetic relays.</li>
-                        <li>Routing real-time environmental data to a cloud-based dashboard.</li>
+                        <li>Introduction to IoT: connecting microcontrollers to Wi-Fi networks.</li>
+                        <li>Interfacing a soil moisture sensor with a relay to automatically control a water pump.</li>
+                        <li>Adding a simple AI feature that predicts when the irrigation system should turn on or off.</li>
+                        <li>Workshop: how to structure and design a project presentation.</li>
                     </ul>
                 </div>
                 <div class="lg:col-span-3 bg-white/5 p-5 rounded-2xl border border-white/5 space-y-3 text-xs">
                     <div>
                         <span class="text-gray-400 block font-medium">Technical Pillar:</span>
-                        <span class="text-white font-semibold">Cloud Systems & Automation Engineering </span>
+                        <span class="text-white font-semibold">IoT, Automation & Applied AI</span>
                     </div>
                     <div class="pt-2 border-t border-white/5">
                         <span class="text-gray-400 block font-medium">Parents' Corner Skill:</span>
-                        <span class="text-red-400 font-semibold">Empathy-driven Social Impact Thinking </span>
+                        <span class="text-red-400 font-semibold">Presentation Skills & Public Speaking</span>
                     </div>
                 </div>
             </div>
 
+            <!-- DAY 5 -->
             <div class="glass-panel p-6 sm:p-8 rounded-3xl grid lg:grid-cols-12 gap-8 items-center" data-aos="fade-up">
                 <div class="lg:col-span-4 text-center lg:text-left lg:border-r lg:border-white/10 lg:pr-6">
                     <span class="text-red-500 font-bold text-xs uppercase tracking-widest bg-red-500/10 px-3 py-1 rounded-md">Day 05</span>
-                    <h3 class="heading-font font-bold text-2xl mt-3 text-white">Grand Innovation Challenge </h3>
+                    <h3 class="heading-font font-bold text-2xl mt-3 text-white">Grand Innovation Challenge & Awards Day</h3>
                     <div class="mt-4 rounded-2xl overflow-hidden border border-white/10 shadow-lg">
-                        <img src="The Great Autonomous Race &amp; Tech Pitch.png" onerror="this.src='https://placehold.co/600x400/0f172a/fff?text=The+Grand+Race+%26+Pitch'" alt="The Grand Race and Pitch Day Layout" class="w-full object-cover h-44">
+                        <img src="The Great Autonomous Race &amp; Tech Pitch.png" onerror="this.src='https://placehold.co/600x400/0f172a/fff?text=Competition+%26+Awards+Day'" alt="The Grand Competition and Awards Day Layout" class="w-full object-cover h-44">
                     </div>
                 </div>
                 <div class="lg:col-span-5 space-y-4">
                     <div>
                         <span class="text-xs font-bold text-blue-400 tracking-wider uppercase">Deliverable Core</span>
-                        <h4 class="text-lg font-bold text-white mt-0.5">The Great Autonomous Race & Tech Pitch </h4>
+                        <h4 class="text-lg font-bold text-white mt-0.5">Final Presentations, Competition & Certificates</h4>
                     </div>
                     <ul class="text-sm text-gray-300 space-y-2 pl-4 list-disc">
-                        <li>The Mini Hackathon: Tearing down and fixing code bugs in a time-sensitive environment.</li>
-                        <li>Running fully autonomous cars through a complex obstacle track.</li>
-                        <li>Conducting tech project presentations.</li>
+                        <li>Every student presents their week's project live in front of judges, parents, and peers.</li>
+                        <li>Live competition: cars and projects are demonstrated and judged on creativity, function, and presentation.</li>
+                        <li><i class="fa-solid fa-trophy text-yellow-400 mr-1.5"></i>The top 2 innovators are awarded prizes for the best projects.</li>
+                        <li><i class="fa-solid fa-certificate text-cyan-400 mr-1.5"></i>Every participant receives an official Certificate of Participation.</li>
                     </ul>
                 </div>
                 <div class="lg:col-span-3 bg-white/5 p-5 rounded-2xl border border-white/5 space-y-3 text-xs">
                     <div>
                         <span class="text-gray-400 block font-medium">Technical Pillar:</span>
-                        <span class="text-white font-semibold">End-to-End System Integration </span>
+                        <span class="text-white font-semibold">End-to-End Project Delivery</span>
                     </div>
                     <div class="pt-2 border-t border-white/5">
                         <span class="text-gray-400 block font-medium">Parents' Corner Skill:</span>
-                        <span class="text-red-400 font-semibold">English Public Speaking, Leadership, and Presentation </span>
+                        <span class="text-red-400 font-semibold">Confidence, Leadership & Sportsmanship</span>
                     </div>
                 </div>
             </div>
@@ -334,7 +460,7 @@
             <h2 class="heading-font font-bold text-2xl sm:text-3xl">The Pro-Maker Discipline</h2>
             <p class="text-gray-400 text-sm mt-3 max-w-xl mx-auto">At ZAN Tech, we don't just teach technology; we cultivate lifelong professional habits throughout the 5 days.</p>
         </div>
-        <div class="grid md:grid-cols-3 gap-8 px-2">
+        <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-8 px-2">
             <div class="text-center p-4" data-aos="fade-right">
                 <div class="w-14 h-14 rounded-2xl bg-red-500/10 flex items-center justify-center text-red-500 mx-auto text-2xl mb-5 border border-red-500/10"><i class="fa-solid fa-boxes-stacked"></i></div>
                 <h4 class="font-bold text-lg mb-2">Inventory Management</h4>
@@ -345,26 +471,117 @@
                 <h4 class="font-bold text-lg mb-2">Workspace Etiquette</h4>
                 <p class="text-sm text-gray-400 leading-relaxed">Following the 'Clean your bench before you leave' rule to instill workplace organization and professional discipline.</p>
             </div>
-            <div class="text-center p-4" data-aos="fade-left">
+            <div class="text-center p-4" data-aos="fade-up">
                 <div class="w-14 h-14 rounded-2xl bg-green-500/10 flex items-center justify-center text-green-400 mx-auto text-2xl mb-5 border border-green-500/10"><i class="fa-solid fa-hourglass-half"></i></div>
                 <h4 class="font-bold text-lg mb-2">Time Management</h4>
                 <p class="text-sm text-gray-400 leading-relaxed">Working against strict milestone deadlines to balance focus, precision, and speed under real-world scenarios.</p>
             </div>
+            <div class="text-center p-4" data-aos="fade-left">
+                <div class="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-400 mx-auto text-2xl mb-5 border border-purple-500/10"><i class="fa-solid fa-comments"></i></div>
+                <h4 class="font-bold text-lg mb-2">Presentation & Public Speaking</h4>
+                <p class="text-sm text-gray-400 leading-relaxed">Students learn how to structure a project pitch and present it confidently in English in front of an audience.</p>
+            </div>
         </div>
     </section>
 
-    <section id="admission-desk" class="relative z-10 max-w-4xl mx-auto px-6 py-24">
+    <!-- Awards & Certification -->
+    <section id="awards" class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+            <span class="text-yellow-400 font-bold text-xs uppercase tracking-widest bg-yellow-400/10 px-3 py-1 rounded-md">Grand Finale</span>
+            <h2 class="heading-font font-bold text-3xl sm:text-4xl tracking-tight mt-4">Competition, Prizes & Certification</h2>
+            <div class="w-12 h-1 bg-zan-red mx-auto mt-4 rounded-full"></div>
+            <p class="text-gray-400 text-sm mt-4 leading-relaxed">On the final day, every student steps into the spotlight to present and demonstrate the projects they've built — exactly like a real tech showcase.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="glass-panel p-8 rounded-3xl text-center border-yellow-400/20" data-aos="zoom-in" data-aos-delay="0">
+                <div class="w-16 h-16 rounded-2xl bg-yellow-400/10 flex items-center justify-center text-yellow-400 mx-auto text-3xl mb-5 border border-yellow-400/20"><i class="fa-solid fa-trophy"></i></div>
+                <h4 class="font-bold text-xl mb-2 heading-font">1st Place Innovator</h4>
+                <p class="text-sm text-gray-400 leading-relaxed">Awarded to the top-performing project, judged on creativity, function, and presentation quality. Winner receives a special prize.</p>
+            </div>
+            <div class="glass-panel p-8 rounded-3xl text-center border-gray-400/20" data-aos="zoom-in" data-aos-delay="100">
+                <div class="w-16 h-16 rounded-2xl bg-gray-300/10 flex items-center justify-center text-gray-200 mx-auto text-3xl mb-5 border border-gray-300/20"><i class="fa-solid fa-medal"></i></div>
+                <h4 class="font-bold text-xl mb-2 heading-font">2nd Place Innovator</h4>
+                <p class="text-sm text-gray-400 leading-relaxed">Awarded to the runner-up project for outstanding effort, problem-solving, and a confident final presentation. Winner receives a prize.</p>
+            </div>
+            <div class="glass-panel p-8 rounded-3xl text-center border-cyan-400/20" data-aos="zoom-in" data-aos-delay="200">
+                <div class="w-16 h-16 rounded-2xl bg-cyan-400/10 flex items-center justify-center text-cyan-400 mx-auto text-3xl mb-5 border border-cyan-400/20"><i class="fa-solid fa-certificate"></i></div>
+                <h4 class="font-bold text-xl mb-2 heading-font">Certificate of Participation</h4>
+                <p class="text-sm text-gray-400 leading-relaxed">Every student who completes the 5-day boot camp — win or not — receives an official ZAN Tech Certificate of Participation.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+        <div class="text-center max-w-xl mx-auto mb-12">
+            <h2 class="heading-font font-bold text-3xl">Frequently Asked Questions</h2>
+            <div class="w-12 h-1 bg-zan-red mx-auto mt-4 rounded-full"></div>
+        </div>
+
+        <div class="space-y-4">
+            <details class="glass-panel rounded-2xl p-5" data-aos="fade-up">
+                <summary class="cursor-pointer font-bold text-white flex justify-between items-center gap-4">
+                    Does my child need any prior coding or electronics experience?
+                    <i class="fa-solid fa-chevron-down text-red-500 flex-shrink-0"></i>
+                </summary>
+                <p class="text-sm text-gray-400 mt-3 leading-relaxed">Not at all. This boot camp is designed to start from absolute zero level. Students begin with the fundamentals of microcontrollers and basic circuits on Day 1, then build up to robotics, IoT, and AI step by step across the 5 days.</p>
+            </details>
+
+            <details class="glass-panel rounded-2xl p-5" data-aos="fade-up" data-aos-delay="50">
+                <summary class="cursor-pointer font-bold text-white flex justify-between items-center gap-4">
+                    What will my child actually build during the camp?
+                    <i class="fa-solid fa-chevron-down text-red-500 flex-shrink-0"></i>
+                </summary>
+                <p class="text-sm text-gray-400 mt-3 leading-relaxed">Over 5 days, students build a sequence of 4 real projects: a Smart Night Light (Day 1), an RC Car (Day 2), an upgraded Obstacle-Avoiding Car (Day 3), and an AI-powered IoT Smart Irrigation System (Day 4) — then present all of it on Competition Day (Day 5).</p>
+            </details>
+
+            <details class="glass-panel rounded-2xl p-5" data-aos="fade-up" data-aos-delay="100">
+                <summary class="cursor-pointer font-bold text-white flex justify-between items-center gap-4">
+                    What teaching approach do you use?
+                    <i class="fa-solid fa-chevron-down text-red-500 flex-shrink-0"></i>
+                </summary>
+                <p class="text-sm text-gray-400 mt-3 leading-relaxed">Every project follows the same 4-step engineering workflow: Plan the project, Select the right equipment, Design the circuit, then Build, Code & Test. The program is 80% hands-on practical work and 20% logic/theory.</p>
+            </details>
+
+            <details class="glass-panel rounded-2xl p-5" data-aos="fade-up" data-aos-delay="150">
+                <summary class="cursor-pointer font-bold text-white flex justify-between items-center gap-4">
+                    How many students are in each batch?
+                    <i class="fa-solid fa-chevron-down text-red-500 flex-shrink-0"></i>
+                </summary>
+                <p class="text-sm text-gray-400 mt-3 leading-relaxed">Each slot is strictly limited to 10 students, so every child gets individual attention and hands-on time with the equipment for every project.</p>
+            </details>
+
+            <details class="glass-panel rounded-2xl p-5" data-aos="fade-up" data-aos-delay="200">
+                <summary class="cursor-pointer font-bold text-white flex justify-between items-center gap-4">
+                    Will my child receive a certificate or win anything?
+                    <i class="fa-solid fa-chevron-down text-red-500 flex-shrink-0"></i>
+                </summary>
+                <p class="text-sm text-gray-400 mt-3 leading-relaxed">Yes. On the final day, every student presents their project in a live competition. The top 2 innovators win prizes, and every student who completes the program receives an official Certificate of Participation.</p>
+            </details>
+
+            <details class="glass-panel rounded-2xl p-5" data-aos="fade-up" data-aos-delay="250">
+                <summary class="cursor-pointer font-bold text-white flex justify-between items-center gap-4">
+                    How do I register and what are the timing options?
+                    <i class="fa-solid fa-chevron-down text-red-500 flex-shrink-0"></i>
+                </summary>
+                <p class="text-sm text-gray-400 mt-3 leading-relaxed">Simply fill out the registration form below. The camp runs for 5 days starting June 20, with a Morning Slot (11:00 AM – 02:00 PM) and an Afternoon Slot (03:00 PM – 06:00 PM). Total investment is 2,999 BDT.</p>
+            </details>
+        </div>
+    </section>
+
+    <section id="admission-desk" class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
         <div class="text-center max-w-xl mx-auto mb-12">
             <h2 class="heading-font font-bold text-3xl">Secure Your Admission</h2>
             <p class="text-gray-400 text-sm mt-2">Complete the verified entry fields via our connected Google Forms portal below.</p>
         </div>
 
         <div class="form-container w-full shadow-2xl overflow-hidden glass-panel p-4 rounded-3xl border border-white/10" data-aos="zoom-in">
-            <iframe 
-                src="https://docs.google.com/forms/d/e/1FAIpQLSfB3NAKuGWFQu14fpDmYpJM9ZukhKLFzv3G9B9UhNdVSaSBaw/viewform?embedded=true" 
-                height="1450" 
-                frameborder="0" 
-                marginheight="0" 
+            <iframe
+                src="https://docs.google.com/forms/d/e/1FAIpQLSfB3NAKuGWFQu14fpDmYpJM9ZukhKLFzv3G9B9UhNdVSaSBaw/viewform?embedded=true"
+                height="1450"
+                frameborder="0"
+                marginheight="0"
                 marginwidth="0">
                 Loading Google Form Window Frame...
             </iframe>
@@ -375,7 +592,7 @@
         <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-10">
             <div>
                 <span class="heading-font font-bold text-xl text-white tracking-wider">ZAN <span class="text-red-500">Tech</span></span>
-                <p class="mt-3 text-xs leading-relaxed max-w-xs">Transforming curious young minds into hands-on creators, innovators, and future tech leaders through specialized automation workshops.</p>
+                <p class="mt-3 text-xs leading-relaxed max-w-xs">Transforming curious young minds into hands-on creators, innovators, and future tech leaders through specialized robotics, IoT & AI workshops.</p>
             </div>
             <div>
                 <h4 class="font-bold text-white text-sm mb-4">📍 Contact & Registration Details</h4>
